@@ -1,8 +1,9 @@
 # DNS Resolver
 ### Скрипты
+(гайд по запуску)
 * Создать окружение - `create-environment.sh`
+* Запустить сервер - `run-server.sh <PORT> <BIND> <EXTERNAL_DNS>` (параметры опциональны)
 * Удалить окружение - `deactivate.sh`
-* Запустить сервер - `run-server.sh <PORT> <BIND> <EXTERNAL_DNS>`
 
 
 ### Параметры

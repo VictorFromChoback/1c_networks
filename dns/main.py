@@ -15,7 +15,7 @@ PORT, BIND, REAL_DNS = 7070, "bind.txt", "8.8.8.8"
 
 
 class SyslogProtocol(asyncio.DatagramProtocol):
-    def __init__(self, lru_size=1):
+    def __init__(self, lru_size=1000):
         self.local_dns = LocalDNS.from_file(BIND)
         # domain -> (response, ts)
         self.lru = LRUCache(maxsize=lru_size)
@@ -67,5 +67,10 @@ if __name__ == '__main__':
     parse_args()
     loop = asyncio.get_event_loop()
     t = loop.create_datagram_endpoint(SyslogProtocol, local_addr=('localhost', PORT))
-    loop.run_until_complete(t)
-    loop.run_forever()
+    try:
+        loop.run_until_complete(t)
+        loop.run_forever()
+    except KeyboardInterrupt:
+        logger.warning("\n-------------- Server finished --------------")
+    finally:
+        loop.close()
